@@ -12,6 +12,7 @@ namespace DevFreela.API.Controllers
 {
     [ApiController]
     [Route("api/users")]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -22,6 +23,7 @@ namespace DevFreela.API.Controllers
 
         //GET api/users
         [HttpGet]
+        [Authorize(Roles = "client, freelancer")]
         public async Task<IActionResult> GetAll(string search = "")
         {
             var query = new GetAllUserQuery();
@@ -33,6 +35,7 @@ namespace DevFreela.API.Controllers
 
         //GETById api/users/id
         [HttpGet("{id}")]
+        [Authorize(Roles = "client, freelancer")]
         public async Task<IActionResult> GetById(int id)
         {
             var result = await _mediator.Send(new GetUserByIdQuery(id));
@@ -48,6 +51,7 @@ namespace DevFreela.API.Controllers
         //POST api/users
         [HttpPost]
         [AllowAnonymous]
+        [Authorize(Roles = "client")]
         public async Task<IActionResult> Post(InsertUserCommand command)
         {
             var result = await _mediator.Send(command);
@@ -57,6 +61,7 @@ namespace DevFreela.API.Controllers
 
         //PUT api/users/id
         [HttpPut("{id}")]
+        [Authorize(Roles = "client")]
         public async Task<IActionResult> Put(int id, UpdateUserCommand command)
         {
             var result = await _mediator.Send(command);
@@ -71,6 +76,7 @@ namespace DevFreela.API.Controllers
 
         //DELETE api/users/id
         [HttpDelete("{id}")]
+        [Authorize(Roles = "client")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _mediator.Send(new DeleteUserCommand(id));
@@ -87,14 +93,14 @@ namespace DevFreela.API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginUserCommand command)
         {
-            var loginUserViewModel = await _mediator.Send(command);
+                var loginUserViewModel = await _mediator.Send(command);
 
-            if (loginUserViewModel == null)
-            {
-                return BadRequest();
-            }
+                if (loginUserViewModel == null)
+                {
+                    return BadRequest();
+                }
 
-            return Ok(loginUserViewModel);
+                return Ok(loginUserViewModel);
         }
     }
 }
