@@ -31,7 +31,7 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
             return await _context.Projects.AnyAsync(x => x.Id == id);
         }
 
-        public async Task<List<Project>> GetAll()
+        public async Task<List<Project>> GetAllAsync()
         {
             var projects = await _context.Projects
               .Include(x => x.Client)

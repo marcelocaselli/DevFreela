@@ -13,7 +13,7 @@ namespace DevFreela.Application.Queries.ProjectQueries.GetAllProjects
         }
         public async Task<ResultViewModel<List<ProjectItemViewModel>>> Handle(GetAllProjectsQuery request, CancellationToken cancellationToken)
         {
-            var projects = await _repository.GetAll();
+            var projects = await _repository.GetAllAsync();
 
             var model = projects.Select(x => new ProjectItemViewModel(x.Id, x.Title, x.Description,
                 x.Client.FullName, x.Freelancer.FullName, x.TotalCost)).ToList();
