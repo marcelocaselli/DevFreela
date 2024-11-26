@@ -13,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddExceptionHandler<ApiExceptionHandler>();
 builder.Services.AddProblemDetails();
 
+builder.Services.AddHttpClient();
+
 builder.Services
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
