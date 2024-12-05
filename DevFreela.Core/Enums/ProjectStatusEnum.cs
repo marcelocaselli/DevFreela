@@ -7,6 +7,7 @@
         Suspended = 2,
         Cancelled = 3,
         Completed = 4,
-        PaymentPending = 5
+        PaymentPending = 5,
+        Finished = 6,
     }
 }
